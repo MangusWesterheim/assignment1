@@ -7,21 +7,20 @@ import (
 )
 
 func main{
-// Extract PORT variable from the environment variables
-port := os.Getenv("PORT")
 
-// Override port with default port if not provided (e.g. local deployment)
-if port == "" {
-log.Println("$PORT has not been set. Default: 8080")
-port = "8080"
-}
+	// Handle port assignment (either based on environment variable, or local override)
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Println("$PORT has not been set. Default: 8080")
+		port = "8080"
+	}
 
-// Default handler for requests (just displays information and points to /diag)
-http.HandleFunc("/", defaultHandler)
-// Assign path for diagnostics handler (actual service feature)
-http.HandleFunc("/diag", diagHandler)
+	// Set up handler endpoints
+	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
+	http.HandleFunc(handler.LOCATION_PATH, handler.LocationHandler)
+	http.HandleFunc(handler.COLLECTION_PATH, handler.CollectionHandler)
 
-// Start HTTP server
-log.Println("Starting server on port " + port + " ...")
-log.Fatal(http.ListenAndServe(":"+port, nil))
+	// Start server
+	log.Println("Starting server on port " + port + " ...")
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
