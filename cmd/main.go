@@ -7,7 +7,7 @@ import (
 	assignment1 "prog2005"
 )
 
-func main{
+func main() {
 
 	// Handle port assignment (either based on environment variable, or local override)
 	port := os.Getenv("PORT")
