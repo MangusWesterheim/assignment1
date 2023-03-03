@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	assignment1 "prog2005"
 )
 
 func main{
@@ -16,9 +17,7 @@ func main{
 	}
 
 	// Set up handler endpoints
-	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
-	http.HandleFunc(handler.LOCATION_PATH, handler.LocationHandler)
-	http.HandleFunc(handler.COLLECTION_PATH, handler.CollectionHandler)
+	http.HandleFunc(assignment1.DEFAULT_PATH, assignment1.EmptyHandler)
 
 	// Start server
 	log.Println("Starting server on port " + port + " ...")
