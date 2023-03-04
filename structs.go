@@ -13,3 +13,19 @@ type Countries struct {
 	languages map[string]string `json:"languages"`
 	maps      string            `json:"maps"`
 }
+
+type Diag struct {
+	unviersitiesapi string `json:"universities_api"`
+	countriespai    string `json:"countries_api"`
+	version         string `json:"v1"`
+	uptime          string `json:"uptime"`
+}
+
+type Rsponse struct {
+	name      string            `json:"name"`
+	country   string            `json:"country"`
+	isocode   string            `json:"isocode"`
+	webpages  []string          `json:"webpages"`
+	languages map[string]string `json:"languages"`
+	maps      string            `json:"map"`
+}
