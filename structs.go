@@ -21,7 +21,7 @@ type Diag struct {
 	Uptime          string `json:"uptime"`
 }
 
-type Rsponse struct {
+type Response struct {
 	Name      string            `json:"name"`
 	Country   string            `json:"country"`
 	Isocode   string            `json:"isocode"`
