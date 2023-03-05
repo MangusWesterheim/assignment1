@@ -8,10 +8,10 @@ type University struct {
 }
 
 type Countries struct {
-	Name      string            `json:"name"`
-	Isocode   string            `json:"isocode"`
+	Isocode   string            `json:"cca2"`
+	Cca3      string            `json:"cca3"`
 	Languages map[string]string `json:"languages"`
-	Maps      string            `json:"maps"`
+	Maps      map[string]string `json:"maps"`
 }
 
 type Diag struct {
@@ -27,5 +27,5 @@ type Response struct {
 	Isocode   string            `json:"isocode"`
 	Webpages  []string          `json:"webpages"`
 	Languages map[string]string `json:"languages"`
-	Maps      string            `json:"map"`
+	Maps      map[string]string `json:"map"`
 }
