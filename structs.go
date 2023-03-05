@@ -12,6 +12,7 @@ type Countries struct {
 	Cca3      string            `json:"cca3"`
 	Languages map[string]string `json:"languages"`
 	Maps      map[string]string `json:"maps"`
+	Borders   []string          `json:"borders"`
 }
 
 type Diag struct {
