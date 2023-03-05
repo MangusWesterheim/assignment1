@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc(assignment1.DEFAULT_PATH, assignment1.EmptyHandler)
 	http.HandleFunc(assignment1.DIAG_PATH, assignment1.DiagHandler)
 	http.HandleFunc(assignment1.UNI_PATH, assignment1.UniHandler)
+	http.HandleFunc(assignment1.NEIGHBOUR_PATH, assignment1.NeighbourHandler)
 
 	// Start server
 	log.Println("Starting server on port " + port + " ...")
