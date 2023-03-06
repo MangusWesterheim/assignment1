@@ -35,7 +35,9 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 	}
 	defer ctryResp.Body.Close()
 
+	//creates a slice that stores the response from the api
 	var countries []Countries
+	//populates the slice with the response from the api
 	err = json.NewDecoder(ctryResp.Body).Decode(&countries)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -107,16 +109,21 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 	}
 	defer uniResp.Body.Close()
 
+	//Creates a slice of the neighbouring universities
 	var neighbourUniversities []University
+	//Populates the slice with the neighbouring universities
 	err = json.NewDecoder(uniResp.Body).Decode(&neighbourUniversities)
+	//Checks for errors
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		fmt.Println(w, "An unexpected error occurred while processing the request.")
 		return
 	}
 
+	//creates a slice to store response
 	var response []Response
 
+	//loop to check if neighbouring universities are in neighbouring countries, matching them and adding them to the response
 	for _, uni := range neighbourUniversities {
 		for _, ctry := range borderCountry {
 			if ctry.Isocode == uni.Isocode {
@@ -134,12 +141,13 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-
+	//marshals the response to json
 	JasonData, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, "Error when returning output", http.StatusInternalServerError)
 		return
 	}
+	//writes the response to the client
 	w.WriteHeader(http.StatusOK)
 	w.Write(JasonData)
 }
