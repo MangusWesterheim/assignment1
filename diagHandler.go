@@ -36,15 +36,16 @@ func getDiag(w http.ResponseWriter) {
 	//Gets the response from the api
 	uniResp, err := client.Get("http://universities.hipolabs.com/")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		log.Println(w, "An unexpected error occurred while processing the request.")
+
 	}
 	defer uniResp.Body.Close()
 
 	//Gets the response from the api
-	ctryResp, err := client.Get("https://restcountries.com/")
+	ctryResp, err := client.Get("https://restcountries.com/v3.1/alpha?codes=col,pe,at")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		log.Println(w, "An unexpected error occurred while processing the request.")
 	}
 	defer ctryResp.Body.Close()
