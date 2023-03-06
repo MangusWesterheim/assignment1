@@ -64,13 +64,10 @@ func getDiag(w http.ResponseWriter) {
 
 	//Encodes the struct into json
 	jsonData, err := json.Marshal(diag)
-	/*
-		//Checks for errors
-		err = encoder.Encode(diag)
-		if err != nil {
-			http.Error(w, "Error during encoding", http.StatusInternalServerError)
-			return
-	*/
+	if err != nil {
+		http.Error(w, "Error when returning output", http.StatusInternalServerError)
+		return
+	}
 
 	//Writes the json data to the client
 	w.WriteHeader(http.StatusOK)
