@@ -54,7 +54,6 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 	}
 	//variable that stores the neighboring countries
 	neighbourCodes := countries[0].Borders
-	fmt.Println(neighbourCodes)
 
 	uniresp, err := client.Get("http://universities.hipolabs.com/search?name=" + parts[5] + "&country=" + parts[4])
 	if err != nil {
@@ -102,7 +101,7 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	//Get requests uni api for neighbouring universities
 	uniResp, err := client.Get("http://universities.hipolabs.com/search?name=" + parts[5])
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
