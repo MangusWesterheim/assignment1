@@ -46,7 +46,6 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Writes the uni response to the client (skriver ut midlertidig slett etterpå)
 	//err = json.NewEncoder(w).Encode(countries)
 	if err != nil {
 		http.Error(w, "Error when returning output", http.StatusInternalServerError)
