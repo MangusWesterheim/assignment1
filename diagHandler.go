@@ -27,8 +27,6 @@ func DiagHandler(w http.ResponseWriter, r *http.Request) {
 func getDiag(w http.ResponseWriter) {
 
 	//Puts api urls in variables
-	uniURL := "http://universities.hipolabs.com/"
-	ctryURL := "https://restcountries.com/"
 	upTime := time.Since(startTime)
 
 	//Creates a new client
@@ -36,7 +34,7 @@ func getDiag(w http.ResponseWriter) {
 	defer client.CloseIdleConnections()
 
 	//Gets the response from the api
-	uniResp, err := client.Get(uniURL)
+	uniResp, err := client.Get("http://universities.hipolabs.com/")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Println(w, "An unexpected error occurred while processing the request.")
@@ -44,7 +42,7 @@ func getDiag(w http.ResponseWriter) {
 	defer uniResp.Body.Close()
 
 	//Gets the response from the api
-	ctryResp, err := client.Get(ctryURL)
+	ctryResp, err := client.Get("https://restcountries.com/")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Println(w, "An unexpected error occurred while processing the request.")
