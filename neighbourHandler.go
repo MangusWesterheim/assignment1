@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -141,6 +142,21 @@ func GetNeighbour(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+
+	limitStr := r.URL.Query().Get("limit")
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		http.Error(w, "limit must be a number", http.StatusBadRequest)
+		return
+	}
+	//checks if limit is bigger than the length of the response
+	if limit > len(response) {
+		//sets limit to the length of the response
+		limit = len(response)
+	}
+	//Removes the extra elements from the response
+	response = response[:limit]
+
 	//marshals the response to json
 	JasonData, err := json.Marshal(response)
 	if err != nil {
