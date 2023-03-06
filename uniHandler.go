@@ -26,11 +26,11 @@ func getUni(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	defer client.CloseIdleConnections()
 
-	//test for array
+	//Splits the url into parts
 	parts := strings.Split(r.URL.Path, "/")
-	//fmt.Println(parts[1]) //prints the parts of the url
 
-	if len(parts) != 5 || parts[4] == "" {
+	//Ensures that path has correct number of elements
+	if len(parts) < 5 || parts[4] == "" {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
@@ -50,15 +50,6 @@ func getUni(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(w, "An unexpected error occurred while processing the request.")
 		return
 	}
-	/*
-		// Writes the uni response to the client (skriver ut midlertidig slett etterpå)
-		err = json.NewEncoder(w).Encode(universities)
-		if err != nil {
-			http.Error(w, "Error when returning output", http.StatusInternalServerError)
-			return
-		}
-
-	*/
 
 	//starts handling the country api
 
@@ -68,16 +59,10 @@ func getUni(w http.ResponseWriter, r *http.Request) {
 		isocodes = append(isocodes, uni.Isocode)
 
 	}
-	//printer ut alle isokoder i slice
-	fmt.Println("Her burde det være isokoder .... ->")
-	fmt.Println(isocodes)
 
 	//Gets the response from the api
-	fmt.Println("Før client get...")
-
-	something := "https://restcountries.com/v3.1/alpha?codes=" + strings.Join(isocodes, ",")
-	ctryResp, err := client.Get(something)
-	fmt.Println("Etter ...")
+	ctryGet := "https://restcountries.com/v3.1/alpha?codes=" + strings.Join(isocodes, ",")
+	ctryResp, err := client.Get(ctryGet)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		fmt.Println(w, "An unexpected error occurred while processing the request.")
@@ -85,27 +70,16 @@ func getUni(w http.ResponseWriter, r *http.Request) {
 	}
 	defer ctryResp.Body.Close()
 
-	urlTest := "https://restcountries.com/v3.1/alpha?codes=" + strings.Join(isocodes, ",")
-	fmt.Println(urlTest)
-	fmt.Println(ctryResp.StatusCode)
-
 	//skriver ut countries med matchende isocode funker ikke
 	var countries []Countries
 	err = json.NewDecoder(ctryResp.Body).Decode(&countries)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		fmt.Println(w, "An unexpected error occurred while processing the request.")
 		return
 	}
-	/*
-		// Writes the uni response to the client (skriver ut midlertidig slett etterpå)
-		err = json.NewEncoder(w).Encode(countries)
-		if err != nil {
-			http.Error(w, "Error when returning output", http.StatusInternalServerError)
-			return
-		}
 
-	*/
 	var response []Response
 
 	for _, uni := range universities {
