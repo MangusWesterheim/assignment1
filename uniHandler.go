@@ -99,11 +99,11 @@ func getUni(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-	JasonData, err := json.Marshal(response)
+	JsonData, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, "Error when returning output", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(JasonData)
+	w.Write(JsonData)
 }
